@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+prometheus-api-client
+psycopg2-binary
+sqlalchemy
+langchain
+openai
+chromadb
+kubernetes
