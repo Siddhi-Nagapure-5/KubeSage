@@ -6,6 +6,54 @@ KubeSage is an AI-Powered Kubernetes Intelligence Assistant designed to provide 
 
 KubeSage is built with a modern, scalable architecture consisting of:
 
+```mermaid
+graph TD
+    %% Users
+    User([User / Admin])
+    
+    %% Frontend
+    subgraph Frontend [Next.js App]
+        UI[UI/Dashboard]
+        UI -->|Natural Language| API_Gateway
+    end
+    
+    User --> UI
+    
+    %% Backend
+    subgraph Backend [FastAPI Server]
+        API_Gateway[API Gateway / Router]
+        Agent[LangChain Agent]
+        RAG[RAG Engine]
+        
+        API_Gateway --> Agent
+        Agent <--> RAG
+    end
+    
+    %% AI Models
+    subgraph AI [External AI Services]
+        OpenAI[OpenAI API]
+        Agent <-->|Prompts & Completions| OpenAI
+    end
+    
+    %% Data Stores
+    subgraph Storage [Databases]
+        DB[(PostgreSQL)]
+        VectorDB[(ChromaDB)]
+        
+        API_Gateway <-->|App Data| DB
+        RAG <-->|Embeddings| VectorDB
+    end
+    
+    %% Infrastructure
+    subgraph Infra [Kubernetes Cluster]
+        K8s_API[K8s API Server]
+        Prometheus[Prometheus Metrics]
+        
+        Agent <-->|Actions/Read| K8s_API
+        Agent <-->|Query Metrics| Prometheus
+    end
+```
+
 ### Frontend
 - **Framework**: Next.js 16 with React 19
 - **Styling**: TailwindCSS 4
